@@ -207,17 +207,17 @@ export default function PaginaTestBackend() {
   );
 }
 
-// Evento di prova: domani dalle 10:00 alle 10:30, nell'ora locale del browser.
+// Evento di prova: domani dalle 10:00 alle 10:30, ora italiana. Gli orari
+// partono SENZA fuso: lo fissa il backend (Europe/Rome), quindi il fuso di
+// questo PC o del browser non conta.
 function eventoDiProva() {
-  const inizio = new Date();
-  inizio.setDate(inizio.getDate() + 1);
-  inizio.setHours(10, 0, 0, 0);
-  const fine = new Date(inizio.getTime() + 30 * 60 * 1000);
+  // "Domani" secondo il calendario italiano: en-CA scrive la data come AAAA-MM-GG.
+  const domani = new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Rome" }).format(Date.now() + 24 * 60 * 60 * 1000);
   return {
     titolo: "Prova assistente YUMPCODE",
     descrizione: "Evento di prova creato da un'azione approvata. Si puo' cancellare.",
-    inizio: inizio.toISOString(),
-    fine: fine.toISOString(),
+    inizio: `${domani}T10:00`,
+    fine: `${domani}T10:30`,
   };
 }
 
