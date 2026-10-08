@@ -15,6 +15,7 @@ type Azione = {
   dettagli: {
     testo?: string | null;
     evento?: { titolo?: string; inizio?: string; fine?: string };
+    scadenza?: { titolo?: string; data?: string; giorniPreavviso?: number; note?: string };
     risultato?: { link?: string | null };
   } | null;
   motivo: string | null;
@@ -196,6 +197,7 @@ export default function PaginaApprovazioni() {
       <ul className="flex flex-col gap-3">
         {azioni?.map((a) => {
           const evento = a.dettagli?.evento;
+          const scadenza = a.dettagli?.scadenza;
           const link = a.dettagli?.risultato?.link;
           const ferma = occupata === a.id;
           return (
@@ -217,6 +219,15 @@ export default function PaginaApprovazioni() {
                 <p>
                   Evento in calendario: <strong>{evento.titolo}</strong>
                   {evento.inizio && evento.fine && ` — ${dataOra(evento.inizio)} / ${dataOra(evento.fine)}`}
+                </p>
+              )}
+              {scadenza?.titolo && (
+                <p>
+                  Promemoria in calendario: <strong>{scadenza.titolo}</strong>
+                  {scadenza.data && ` — scade il ${scadenza.data.split("-").reverse().join("/")}`}
+                  {scadenza.giorniPreavviso !== undefined &&
+                    ` · avviso ${scadenza.giorniPreavviso === 0 ? "il giorno stesso" : `${scadenza.giorniPreavviso} giorni prima`}`}
+                  {scadenza.note && <span className="block whitespace-pre-wrap text-zinc-600">{scadenza.note}</span>}
                 </p>
               )}
               {link && (

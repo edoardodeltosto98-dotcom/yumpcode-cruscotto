@@ -25,6 +25,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               <Show when="signed-in">
                 <nav className="flex gap-4 text-sm">
                   <Link href="/approvazioni" className="hover:underline">Approvazioni</Link>
+                  <Link href="/scadenze" className="hover:underline">Scadenze</Link>
                   <Link href="/numeri" className="hover:underline">Numeri</Link>
                   <Link href="/impostazioni" className="hover:underline">Impostazioni</Link>
                 </nav>
